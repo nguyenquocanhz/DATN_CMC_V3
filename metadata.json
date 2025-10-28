@@ -1,0 +1,7 @@
+{
+  "name": "TeamHub - HR Management",
+  "description": "A comprehensive HR management dashboard to manage employee information, attendance, payroll, and more. This applet provides a modern and intuitive interface for all your HR tasks.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}

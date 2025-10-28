@@ -1,0 +1,172 @@
+<div class="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 bg-white rounded-lg shadow-md">
+  <h2 class="text-2xl font-bold text-gray-800 mb-2">Đăng ký cho nhân viên mới</h2>
+  <p class="text-sm text-gray-500 mb-6">Nhập tất cả các thông tin cần thiết để đăng ký nhân viên mới vào hồ sơ</p>
+  
+  <div class="flex items-start gap-8">
+    <!-- Stepper -->
+    <div class="w-1/4">
+      <ol class="space-y-8">
+        <li class="flex items-start">
+          <div class="flex flex-col items-center">
+            <span class="flex items-center justify-center w-8 h-8 rounded-full" [class.bg-blue-600]="currentStep() >= 1" [class.text-white]="currentStep() >= 1" [class.bg-gray-200]="currentStep() < 1">1</span>
+            @if(currentStep() < 3) {
+                <div class="w-px h-16" [class.bg-blue-600]="currentStep() >= 1" [class.bg-gray-200]="currentStep() < 1"></div>
+            }
+          </div>
+          <div class="ml-4">
+            <h3 class="font-semibold" [class.text-blue-600]="currentStep() === 1">Thông tin cá nhân</h3>
+            <p class="text-sm text-gray-500">Thông tin cá nhân</p>
+          </div>
+        </li>
+        <li class="flex items-start">
+          <div class="flex flex-col items-center">
+            <span class="flex items-center justify-center w-8 h-8 rounded-full" [class.bg-blue-600]="currentStep() >= 2" [class.text-white]="currentStep() >= 2" [class.bg-gray-200]="currentStep() < 2">2</span>
+            @if(currentStep() < 3) {
+                 <div class="w-px h-16" [class.bg-blue-600]="currentStep() >= 2" [class.bg-gray-200]="currentStep() < 2"></div>
+            }
+          </div>
+          <div class="ml-4">
+            <h3 class="font-semibold" [class.text-blue-600]="currentStep() === 2">Nhân viên & Lương</h3>
+            <p class="text-sm text-gray-500">Thông tin chi tiết nhân viên</p>
+          </div>
+        </li>
+        <li class="flex items-start">
+           <span class="flex items-center justify-center w-8 h-8 rounded-full" [class.bg-blue-600]="currentStep() === 3" [class.text-white]="currentStep() === 3" [class.bg-gray-200]="currentStep() < 3">3</span>
+           <div class="ml-4">
+            <h3 class="font-semibold" [class.text-blue-600]="currentStep() === 3">Khuôn mặt</h3>
+            <p class="text-sm text-gray-500">Đăng ký khuôn mặt</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <!-- Form Content -->
+    <div class="w-3/4">
+      <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+        <!-- Step 1: Personal Information -->
+        @if (currentStep() === 1) {
+          <div formGroupName="personalInfo" class="space-y-4">
+            <h3 class="text-lg font-semibold text-gray-700">Thông tin cá nhân</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700">Họ & tên</label>
+                <input type="text" formControlName="fullName" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700">Ngày sinh</label>
+                <input type="date" formControlName="birthDate" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Giới tính</label>
+              <select formControlName="gender" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Person don't stay</option>
+              </select>
+            </div>
+             <div>
+                <label class="block text-sm font-medium text-gray-700">Liên hệ</label>
+                <input type="email" formControlName="email" placeholder="Email" class="mt-1 mb-2 block w-full border-gray-300 rounded-md shadow-sm">
+                <input type="tel" formControlName="phone" placeholder="Số điện thoại" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+              </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Địa chỉ</label>
+              <textarea formControlName="address" rows="3" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"></textarea>
+            </div>
+            <div class="flex justify-end gap-3 pt-4">
+              <button type="button" (click)="cancel()" class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">Lưu & Thoát</button>
+              <button type="button" (click)="nextStep()" class="px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700">Tiếp theo</button>
+            </div>
+          </div>
+        }
+
+        <!-- Step 2: Employee & Salary Information -->
+        @if (currentStep() === 2) {
+          <div formGroupName="employeeInfo" class="space-y-4">
+            <h3 class="text-lg font-semibold text-gray-700">Thông tin chi tiết nhân viên</h3>
+             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700">Mã nhân viên</label>
+                  <input type="text" formControlName="employeeId" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700">Ngày vào</label>
+                  <input type="date" formControlName="joinDate" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                </div>
+             </div>
+             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700">Công ty</label>
+                  <input type="text" formControlName="company" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700">Phòng ban</label>
+                  <input type="text" formControlName="department" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                </div>
+             </div>
+             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700">Vị trí công việc</label>
+                  <input type="text" formControlName="jobTitle" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700">Hình thức làm việc</label>
+                   <select formControlName="workType" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                      <option>Full-Time</option>
+                      <option>Part-Time</option>
+                      <option>Freelance</option>
+                      <option>Internship</option>
+                  </select>
+                </div>
+             </div>
+            <h3 class="text-lg font-semibold text-gray-700 pt-4">Lương</h3>
+             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700">Lương cứng</label>
+                  <input type="number" formControlName="baseSalary" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700">Số tài khoản</label>
+                  <input type="text" formControlName="accountNumber" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                </div>
+             </div>
+            <div class="flex justify-between items-center pt-4">
+                <button type="button" (click)="prevStep()" class="px-4 py-2 text-blue-600 text-sm font-medium">Quay lại</button>
+                <div class="flex gap-3">
+                    <button type="button" (click)="cancel()" class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">Lưu & Thoát</button>
+                    <button type="button" (click)="nextStep()" class="px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700">Tiếp theo</button>
+                </div>
+            </div>
+          </div>
+        }
+
+        <!-- Step 3: Face Registration -->
+        @if (currentStep() === 3) {
+          <div class="space-y-4">
+            <h3 class="text-lg font-semibold text-gray-700">Đăng ký khuôn mặt</h3>
+            <p class="text-sm text-gray-500">Đặt khuôn mặt của nhân viên vào trong khung hình</p>
+            <div class="w-full h-64 bg-gray-800 text-white flex items-center justify-center rounded-lg">
+                <p>Camera feed placeholder</p>
+                <!-- In a real app, you would use navigator.mediaDevices.getUserMedia here -->
+            </div>
+            <p class="text-xs text-gray-500">Lưu ý: Đứng trước camera, căn chỉnh khuôn mặt vào trong khung hình để thực hiện xác thực, không đeo phụ kiện che mặt.</p>
+            <h4 class="font-semibold text-gray-700">Hình ảnh thu được</h4>
+            <div class="flex gap-4">
+                <div class="w-24 h-24 bg-gray-200 rounded-md"></div>
+                <div class="w-24 h-24 bg-gray-200 rounded-md"></div>
+                <div class="w-24 h-24 bg-gray-200 rounded-md"></div>
+            </div>
+            <div class="flex justify-between items-center pt-4">
+              <button type="button" (click)="prevStep()" class="px-4 py-2 text-blue-600 text-sm font-medium">Quay lại</button>
+              <div class="flex gap-3">
+                  <button type="button" (click)="cancel()" class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">Lưu & Thoát</button>
+                  <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700">Lưu</button>
+              </div>
+            </div>
+          </div>
+        }
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+<div class="flex items-center justify-center min-h-screen bg-gray-50">
+  <div class="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
+    <div class="text-center">
+      <svg class="w-12 h-12 mx-auto text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.653-.122-1.28-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.653.122-1.28.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+      </svg>
+      <h2 class="mt-6 text-3xl font-extrabold text-gray-900">Create your account</h2>
+      <p class="mt-2 text-sm text-gray-600">And start managing your team efficiently</p>
+    </div>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="mt-8 space-y-6">
+      <div>
+        <label for="email" class="sr-only">Email Address</label>
+        <input id="email" formControlName="email" type="email" placeholder="Email address" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-teal-500 focus:border-teal-500 focus:z-10 sm:text-sm">
+        @if (email?.invalid && (email?.dirty || email?.touched)) {
+          <div class="text-red-500 text-xs mt-1">
+              @if (email?.errors?.['required']) { <span>Email is required.</span> }
+              @if (email?.errors?.['email']) { <span>Please enter a valid email.</span> }
+          </div>
+        }
+      </div>
+      <div>
+        <label for="password" class="sr-only">Password</label>
+        <input id="password" formControlName="password" type="password" placeholder="Password" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-teal-500 focus:border-teal-500 focus:z-10 sm:text-sm">
+        @if (password?.invalid && (password?.dirty || password?.touched)) {
+          <div class="text-red-500 text-xs mt-1">
+              @if (password?.errors?.['required']) { <span>Password is required.</span> }
+              @if (password?.errors?.['minlength']) { <span>Password must be at least 6 characters.</span> }
+          </div>
+        }
+      </div>
+      <div>
+        <label for="confirmPassword" class="sr-only">Confirm Password</label>
+        <input id="confirmPassword" formControlName="confirmPassword" type="password" placeholder="Confirm password" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-teal-500 focus:border-teal-500 focus:z-10 sm:text-sm">
+        @if (registerForm.errors?.['mismatch'] && confirmPassword?.dirty) {
+          <div class="text-red-500 text-xs mt-1">Passwords do not match.</div>
+        }
+      </div>
+      <div>
+        <button type="submit" [disabled]="registerForm.invalid" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 disabled:bg-teal-300">
+          Register
+        </button>
+      </div>
+    </form>
+    <p class="mt-2 text-sm text-center text-gray-600">
+      Already have an account? <a routerLink="/login" class="font-medium text-teal-600 hover:text-teal-500">Log in</a>
+    </p>
+  </div>
+</div>
